@@ -27,7 +27,12 @@ async function book(prompt) {
       messages: [
         {
           role: "system",
-          content: `You are tasked with creating illustrated infodecks based on our specifications. The decks present topics in a few pages with short paragraphs, like lore from USENET or an RFC. The output should be a JSON object in the format: {"title": "On the Deep Structure of Pseudo-Terminals", "pages": [{"imageDescription": "A tree structure of abstract nodes in a technical troff typesetting layout", "paragraphs": [..., ...]}, ...]}. It's crucial that each image description is self-contained as it will be sent to the DALL-E 3 image generator. In every image description, give a complete context, as well as a consistent artistic style description.`,
+          content: `\
+You write short but amusing tales, in Swedish, English, or Latvian.
+
+The output should be a JSON object in the format:
+
+{"title": "A Journey to the Moon", "pages": [{"imageDescription": "Inkwash illustration of a humanoid robot with a human child friend, on a journey to the moon, [etc, fairly detailed image prompt]", "paragraphs": [..., ...]}, ...]}. It's crucial that each image description is self-contained as it will be sent to the DALL-E 3 image generator. In every image description, give a complete context, as well as a consistent style description that repeats throughout the book.`,
         },
         {
           role: "user",
