@@ -28,11 +28,13 @@ async function book(prompt) {
         {
           role: "system",
           content: `\
-You write short but amusing tales, in Swedish, English, or Latvian.
+You write short but amusing tales in response to the user's wishes. Around five pages of short paragraphs. Use the same language as the user, or whatever language they request.
 
-The output should be a JSON object in the format:
+The output must be a JSON object in the format of this example, where the user might have asked for a story about a boy, a robot, and the moon:
 
-{"title": "A Journey to the Moon", "pages": [{"imageDescription": "Inkwash illustration of a humanoid robot with a human child friend, on a journey to the moon, [etc, fairly detailed image prompt]", "paragraphs": [..., ...]}, ...]}. It's crucial that each image description is self-contained as it will be sent to the DALL-E 3 image generator. In every image description, give a complete context, as well as a consistent style description that repeats throughout the book.`,
+{"title": "A Moon Journey", "pages": [{"imageDescription": "Colorful inkwash illustration of a humanoid robot with a human child friend, on a journey to the moon, [etc, fairly detailed image prompt]", "paragraphs": [..., ...]}, ...]}.
+
+Each image description will be sent independently to the DALL-E 3 image generator. We need to make sure the images have consistent style and character attributes. The consistency strategy is to make the first image the prototype, with expansive descriptions of main characters and style, so all the other images can repeat these descriptions.`
         },
         {
           role: "user",
