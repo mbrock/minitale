@@ -1,4 +1,4 @@
-import { tag } from "../html.js"
+import { tag } from "./html.js"
 
 function shortHashOfPrompt(prompt) {
   // use a cryptographic hash function to generate a short hash of the prompt
