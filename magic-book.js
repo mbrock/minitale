@@ -45,7 +45,9 @@ async function book(prompt) {
     `book:${hash}`,
     JSON.stringify({ prompt, time: Date.now(), ...book }),
   )
-  document.body.prepend(createDomElementFromJson(book, hash))
+  document.body
+    .querySelector("magic-library")
+    .prepend(createDomElementFromJson(book, hash))
 }
 
 function createDomElementFromJson(data, hash) {
@@ -266,7 +268,7 @@ class MagicBook extends HTMLElement {
 
 customElements.define("magic-book", MagicBook)
 
-class MagicLibrary extends HTMLElement {
+class OldMagicLibrary extends HTMLElement {
   constructor() {
     super()
     this.apiKey = MagicBook.retrieveAPIKey()
@@ -301,6 +303,71 @@ class MagicLibrary extends HTMLElement {
       if (key.startsWith("book:")) {
         const book = JSON.parse(json)
         this.appendChild(createDomElementFromJson(book, key))
+      }
+    }
+  }
+}
+
+class MagicLibrary extends HTMLElement {
+  constructor() {
+    super();
+    this.apiKey = MagicBook.retrieveAPIKey();
+  }
+
+  connectedCallback() {
+    const triggerButton = tag(
+      "button", 
+      {
+        onclick: (e) => {
+          this.showPromptDialog();
+        },
+      }, 
+      ["+"]
+    );
+
+    this.appendChild(triggerButton);
+
+    this.loadBooks();
+  }
+
+  showPromptDialog() {
+    let dialog = document.querySelector('dialog#promptDialog');
+    if (!dialog) {
+      dialog = document.createElement('dialog');
+      dialog.id = 'promptDialog';
+
+      // Assuming use of the same tag function for simplicity, even for nested elements
+      const form = tag(
+        'form', 
+        {
+          onsubmit: (e) => {
+            e.preventDefault();
+            const input = dialog.querySelector('input.prompt');
+            if (input.value) {
+              book(input.value);
+              dialog.close();
+            }
+            return false;
+          }
+        }, [
+          tag('input', { class: 'prompt', placeholder: 'Enter a prompt', type: 'text' }),
+          tag('button', { type: 'submit' }, ['🪄'])
+        ]
+      );
+
+      dialog.appendChild(form);
+      document.body.appendChild(dialog);
+    }
+
+    dialog.showModal();
+  }
+
+  loadBooks() {
+    for (const [key, json] of Object.entries(localStorage)) {
+      if (key.startsWith("book:")) {
+        const book = JSON.parse(json);
+        const bookElement = createDomElementFromJson(book, key); // Assuming this is a predefined function
+        this.appendChild(bookElement);
       }
     }
   }

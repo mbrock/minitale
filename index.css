@@ -1,16 +1,21 @@
+/* Base font settings for easy readability */
 html {
-  font: 24px/1.5 -apple-system, BlinkMacSystemFont, sans-serif;
+  font: 18px/1.5 -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "berkeley mono"; /* Custom font for a magical feel */
 }
 
+/* Makes sure all elements have the same box model for consistency */
 * {
   box-sizing: border-box;
 }
 
+/* Styling for the body: dark mode with light text for contrast */
 body {
   background-color: black;
-  color: #e0e0e0;
+  color: ivory;
 }
 
+/* Positioning of the body and custom elements to fill entire viewport */
 body,
 magic-library {
   position: absolute;
@@ -21,12 +26,14 @@ magic-library {
   margin: 0;
 }
 
+/* Center form elements horizontally and vertically */
 form {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Styling for input fields inside forms */
 input {
   width: 100%;
   padding: 0.5rem;
@@ -38,6 +45,7 @@ input {
   color: #e0e0e0;
 }
 
+/* Container style for magic-book, allows horizontal scrolling */
 magic-book {
   display: flex;
   margin: auto;
@@ -45,6 +53,14 @@ magic-book {
   scroll-snap-type: x mandatory;
 }
 
+/* Links in the books are titles; reset styling */
+magic-book a {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Detailed styling when magic-book is the target of a navigation */
 magic-book:target {
   height: 100%;
   flex-direction: column;
@@ -52,11 +68,13 @@ magic-book:target {
   scroll-snap-type: y mandatory;
 }
 
+/* Styling for images not in target mode, with some border radius for visual comfort */
 magic-book:not(:target) img {
   max-height: 10rem;
   border-radius: 1rem 0rem 0rem 1rem;
 }
 
+/* Background and alignment for figures outside of target mode */
 magic-book:not(:target) figure {
   display: flex;
   align-items: center;
@@ -65,31 +83,30 @@ magic-book:not(:target) figure {
   border-radius: 1rem;
 }
 
+/* Ensures paragraphs within non-targeted books are centered and constrained in width */
 magic-book:not(:target) p {
   max-width: 7rem;
   text-align: center;
 }
 
+/* Hides all but the first figure in non-target mode for clarity */
 magic-book:not(:target) figure:not(:first-child) {
   display: none;
 }
 
-magic-library {
-  display: flex;
-  flex-wrap: wrap;
-}
-
+/* Layout for figures, using grid for precise placement of child elements */
 figure {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 0 min-content;
-
   align-items: center;
+  align-content: center;
   height: 100%;
   scroll-snap-align: center;
   flex-shrink: 0;
 }
 
+/* Styling for images within figures, ensuring fit and adding soft shadow */
 figure img {
   grid-column: 1;
   grid-row: 2;
@@ -97,8 +114,10 @@ figure img {
   max-height: 100%;
   object-fit: contain;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 2rem;
 }
 
+/* Audio elements are made slightly transparent for a subtle appearance */
 figure audio {
   grid-column: 1 / span 2;
   grid-row: 1;
@@ -106,6 +125,7 @@ figure audio {
   opacity: 0.5;
 }
 
+/* Detailed styling for divs in figures, including margins for readability */
 figure div {
   grid-column: 2;
   grid-row: 2;
@@ -115,38 +135,43 @@ figure div {
   text-align: justify;
 }
 
+/* Figcaptions are hidden by default for a cleaner look */
 figcaption {
   display: none;
 }
 
+/* Marks the currently playing item with bold text for easy identification */
 .playing {
   font-weight: bold;
 }
 
+/* Utility class to hide elements */
 .hide {
   display: none;
 }
 
+/* Spinner animation for loading images, centered with rotation effect */
 .img.generating::before {
   content: "";
   display: block;
   width: 40px; /* Size of the spinner */
   height: 40px; /* Size of the spinner */
-  border: 4px solid rgba(0, 0, 0, 0.1); /* Light grey border */
-  border-radius: 50%; /* Makes it circular */
-  border-top-color: #3498db; /* Primary color for the spinner */
-  animation: spin 1s ease-in-out infinite; /* Animation */
-  position: absolute; /* Adjust as needed */
-  top: 50%; /* Center the spinner */
-  left: 50%; /* Center the spinner */
-  transform: translate(-50%, -50%); /* Center the spinner */
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light grey border, less focus drawing */
+  border-radius: 50%; /* Circular spinner */
+  border-top-color: #3498db; /* Color hint for visual tracking */
+  animation: spin 1s ease-in-out infinite; /* Smooth, continuous rotation */
+  position: absolute; /* Positioned relative to the parent */
+  top: 50%; /* Centered vertically */
+  left: 50%; /* Centered horizontally */
+  transform: translate(-50%, -50%); /* Precise centering adjustment */
 }
 
+/* Keyframes for spinner animation, ensuring a smooth 360-degree rotation */
 @keyframes spin {
-  0% {
+  from {
     transform: translate(-50%, -50%) rotate(0deg);
   }
-  100% {
+  to {
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
