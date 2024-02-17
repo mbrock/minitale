@@ -1,0 +1,152 @@
+html {
+  font: 24px/1.5 -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: #e0e0e0;
+}
+
+body,
+magic-library {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border: none;
+  background-color: black;
+  margin: 0.5rem;
+  color: #e0e0e0;
+}
+
+magic-book {
+  display: flex;
+  margin: auto;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+magic-book:target {
+  height: 100%;
+  flex-direction: column;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+magic-book:not(:target) img {
+  max-height: 10rem;
+  border-radius: 1rem 0rem 0rem 1rem;
+}
+
+magic-book:not(:target) figure {
+  display: flex;
+  align-items: center;
+  background-color: #111;
+  border: 4px solid #333;
+  border-radius: 1rem;
+}
+
+magic-book:not(:target) p {
+  max-width: 7rem;
+  text-align: center;
+}
+
+magic-book:not(:target) figure:not(:first-child) {
+  display: none;
+}
+
+magic-library {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+figure {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 0 min-content;
+
+  align-items: center;
+  height: 100%;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+figure img {
+  grid-column: 1;
+  grid-row: 2;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+figure audio {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  width: 100%;
+  opacity: 0.5;
+}
+
+figure div {
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: 0;
+  margin-left: 1.5rem;
+  margin-right: 1rem;
+  text-align: justify;
+}
+
+figcaption {
+  display: none;
+}
+
+.playing {
+  font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
+.img.generating::before {
+  content: "";
+  display: block;
+  width: 40px; /* Size of the spinner */
+  height: 40px; /* Size of the spinner */
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light grey border */
+  border-radius: 50%; /* Makes it circular */
+  border-top-color: #3498db; /* Primary color for the spinner */
+  animation: spin 1s ease-in-out infinite; /* Animation */
+  position: absolute; /* Adjust as needed */
+  top: 50%; /* Center the spinner */
+  left: 50%; /* Center the spinner */
+  transform: translate(-50%, -50%); /* Center the spinner */
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
